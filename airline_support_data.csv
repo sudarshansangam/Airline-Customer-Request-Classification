@@ -1,0 +1,73 @@
+text,label
+I want to cancel my reservation.,cancel_trip
+Please cancel my upcoming flight.,cancel_trip
+Can you help me with a ticket cancellation?,cancel_trip
+How do I cancel my ticket?,cancel_trip
+What is your flight cancellation policy?,cancellation_policy
+Can you explain the cancellation terms?,cancellation_policy
+What are the rules if I need to cancel?,cancellation_policy
+What happens if I cancel my booking?,cancellation_policy
+Can you tell me the rules for carry-on bags?,carry_on_luggage_faq
+What can I bring in my cabin bag?,carry_on_luggage_faq
+Is there a size limit for carry-on luggage?,carry_on_luggage_faq
+How much can my carry-on weigh?,carry_on_luggage_faq
+I need to change my flight to tomorrow.,change_flight
+Can I move my booking to a later date?,change_flight
+How can I reschedule my flight?,change_flight
+Is it possible to switch to another flight?,change_flight
+How many checked bags are allowed?,check_in_luggage_faq
+What is the baggage allowance for my flight?,check_in_luggage_faq
+Are there any fees for checked luggage?,check_in_luggage_faq
+What is the maximum weight for checked baggage?,check_in_luggage_faq
+I have a complaint about my last flight.,complaints
+I'm not happy with the service I received.,complaints
+Where do I submit a complaint?,complaints
+Who can I talk to about a bad experience?,complaints
+My bag was damaged during transit.,damaged_bag
+The handle on my suitcase was broken when I got it.,damaged_bag
+My baggage got damaged on your flight.,damaged_bag
+My luggage arrived with a torn zipper.,damaged_bag
+Are there any ongoing discounts or promotions?,discounts
+Do you offer student discounts?,discounts
+Are there any special fares available?,discounts
+How can I get a discount code?,discounts
+What is the fare from New York to London next week?,fare_check
+How much does it cost to fly to Paris?,fare_check
+Price for a roundtrip ticket to San Francisco?,fare_check
+Can you give me the fare details for Mumbai?,fare_check
+Is flight 101 delayed?,flight_status
+Can you tell me the current status of flight AB123?,flight_status
+Has flight 200 landed?,flight_status
+Is my flight on time or delayed?,flight_status
+What flights are available to Chicago on Friday?,flights_info
+List all flights to Mumbai this weekend.,flights_info
+Are there any direct flights to Tokyo?,flights_info
+What are my options for flights to Dubai?,flights_info
+How can I add travel insurance to my booking?,insurance
+Do you provide insurance for flights?,insurance
+Tell me about travel insurance coverage.,insurance
+Do you offer trip insurance?,insurance
+What is your policy regarding traveling with medication?,medical_policy
+Can I bring prescription drugs on board?,medical_policy
+Are there guidelines for traveling with medical equipment?,medical_policy
+Is a doctor’s note required for certain medications?,medical_policy
+My luggage did not arrive. I think it's missing.,missing_bag
+I can't find my bag at the baggage claim.,missing_bag
+My bag has been lost what should I do?,missing_bag
+My suitcase is missing please help.,missing_bag
+Can I bring my dog on the flight with me?,pet_travel
+What are the airline's policies for traveling with pets?,pet_travel
+Is there a pet fee for my cat?,pet_travel
+Do you allow pets in the cabin?,pet_travel
+Are there items that are not allowed in my baggage?,prohibited_items_faq
+What is prohibited in checked luggage?,prohibited_items_faq
+Tell me about banned items on the airplane.,prohibited_items_faq
+Is pepper spray allowed in my bag?,prohibited_items_faq
+Are there any window seats available on flight 202?,seat_availability
+I want to check seat availability for business class.,seat_availability
+Can I change to an aisle seat?,seat_availability
+Are there seats left in economy?,seat_availability
+How do I check in my guitar or sports equipment?,sports_music_gear
+Can I bring my skis on this flight?,sports_music_gear
+Are musical instruments allowed as carry-on?,sports_music_gear
+Do you have special rules for sports gear?,sports_music_gear

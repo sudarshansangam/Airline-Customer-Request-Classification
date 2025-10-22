@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Airline Customer Request Classifier</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f0f0f0; }
+        #result { margin-top: 20px; font-weight: bold; font-size: 18px; color: #007bff; }
+        label { display: block; margin-bottom: 8px; }
+        input[type="text"] { width: 400px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 7px 15px; background-color: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        .section { margin-bottom: 40px; background-color: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            z-index: 1;
+        }
+        .popup.show { display: block; }
+        .popup-content { text-align: center; }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Airline Support Bot: Request Type Classifier</h1>
+    
+    <div class="section">
+        <h2>Classify Message</h2>
+        <form id="classifierForm">
+            <label for="message">Enter your message:</label>
+            <input type="text" id="message" name="message" autofocus required>
+            <button type="submit">Classify</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+
+    <div class="section">
+        <h2>View Metrics</h2>
+        <button id="getMetricsBtn">Get Metrics</button>
+        <div id="metricsResult"></div>
+    </div>
+
+    <script>
+        document.getElementById('classifierForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const msg = document.getElementById('message').value;
+            document.getElementById('result').textContent = "Predicting...";
+            try {
+                const response = await fetch('http://localhost:8000/classify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({message: msg})
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('result').textContent = 
+                        `Predicted Request Type: ${data.request_type}`;
+                } else {
+                    document.getElementById('result').textContent = "Error: Could not classify the message.";
+                }
+            } catch (err) {
+                document.getElementById('result').textContent = "Network error or server unavailable.";
+            }
+        });
+
+        document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const message = document.getElementById('feedbackMessage').value;
+            const predictedType = document.getElementById('predictedType').value;
+            const feedback = document.getElementById('feedback').value;
+            document.getElementById('feedbackResult').textContent = "Submitting feedback...";
+            try {
+                const response = await fetch('http://localhost:8000/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({message, predicted_type: predictedType, feedback})
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('feedbackResult').textContent = 
+                        `Feedback received. Current metrics: Correct - ${data.metrics.correct}, Incorrect - ${data.metrics.incorrect}`;
+                } else {
+                    document.getElementById('feedbackResult').textContent = "Error: Could not submit feedback.";
+                }
+            } catch (err) {
+                document.getElementById('feedbackResult').textContent = "Network error or server unavailable.";
+            }
+        });
+
+        document.getElementById('getMetricsBtn').addEventListener('click', async function() {
+            document.getElementById('metricsResult').textContent = "Fetching metrics...";
+            try {
+                const response = await fetch('http://localhost:8000/metrics', {
+                    method: 'GET',
+                    headers: { 'accept': 'application/json' }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    const metricsText = `Correct: ${data.metrics.correct}, Incorrect: ${data.metrics.incorrect}, Accuracy: ${data.accuracy !== null ? (data.accuracy * 100).toFixed(2) + '%' : 'N/A'}`;
+                    document.getElementById('metricsResult').textContent = metricsText;
+                } else {
+                    document.getElementById('metricsResult').textContent = "Error: Could not fetch metrics.";
+                }
+            } catch (err) {
+                document.getElementById('metricsResult').textContent = "Network error or server unavailable.";
+            }
+        });
+    </script>
+    <!-- <div id="resultPopup" class="popup">
+        <div class="popup-content">
+            <span id="closeBtn" class="close-btn">&times;</span>
+            <p id="popupResult"></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('classifierForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const msg = document.getElementById('message').value;
+            document.getElementById('result').textContent = "Predicting...";
+            try {
+                const response = await fetch('http://localhost:8000/classify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({message: msg})
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    showPopup(`Predicted Request Type: ${data.request_type}`);
+                } else {
+                    document.getElementById('result').textContent = "Error: Could not classify the message.";
+                }
+            } catch (err) {
+                document.getElementById('result').textContent = "Network error or server unavailable.";
+            }
+        });
+
+        function showPopup(message) {
+            const popup = document.getElementById('resultPopup');
+            const popupResult = document.getElementById('popupResult');
+            popupResult.textContent = message;
+            popup.classList.add('show');
+        }
+
+        document.getElementById('closeBtn').addEventListener('click', function() {
+            document.getElementById('resultPopup').classList.remove('show');
+        });
+    </script> -->
+</body>
+</html>
